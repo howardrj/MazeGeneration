@@ -113,16 +113,23 @@ Maze.prototype.generateMaze = function ()
                 cells[j].style.borderRightColor = "white";
 
                 // Merge sets (adjust set-id of old cells as well as next one)
-                for (var k = 0; k <= j + 1; k++)
+                // Ensures each row as correct set number configuration
+                var cells_to_update = new Array();
+
+                for (var k = 0; k < cells.length; k++)
                 {
                     if (cells[k].getAttribute('set-id') == cells[j + 1].getAttribute('set-id'))
-                    {
-                        cells[k].setAttribute('set-id', cells[j].getAttribute('set-id'));
-
-                        if (this.debug)
-                            cells[k].innerHTML = cells[j].innerHTML;
-                    }
+                        cells_to_update.push(k);
                 }
+                
+                // Update cells at indices we captured in previous loop
+                for (var k = 0; k < cells_to_update.length; k++)
+                {
+                    cells[cells_to_update[k]].setAttribute('set-id', cells[j].getAttribute('set-id'));
+
+                    if (this.debug)
+                        cells[cells_to_update[k]].innerHTML = cells[j].innerHTML;
+                } 
             }
         }
 
@@ -145,7 +152,7 @@ Maze.prototype.generateMaze = function ()
             }
         }
 
-        var debug_mode = this.debug // Can't access this pointer inside forEach for some reason
+        var debug_mode = this.debug // Can't access 'this' pointer inside forEach for some reason
 
         // Loop through map info
         row_map.forEach(function (value, key, map) {
@@ -167,8 +174,8 @@ Maze.prototype.generateMaze = function ()
             }
         });
     }
+
     // Join up disjoint sets in last row
-    /*
     var cells = cell_rows[this.numCellsY - 1].getElementsByClassName("cell");
         
     for (var j = 0; j < cells.length - 1; j++)
@@ -176,16 +183,29 @@ Maze.prototype.generateMaze = function ()
         if (cells[j].getAttribute('set-id') != cells[j + 1].getAttribute('set-id'))
         {
             cells[j].style.borderRightColor = "white";
-            cells[j + 1].setAttribute('set-id', cells[j].getAttribute('set-id'));
 
-            if (this.debug)
-                cells[j + 1].innerHTML = cells[j].innerHTML;
+            var cells_to_update = new Array();
+
+            for (var k = 0; k < cells.length; k++)
+            {
+                if (cells[k].getAttribute('set-id') == cells[j + 1].getAttribute('set-id'))
+                    cells_to_update.push(k);
+            }
+            
+            // Update cells at indices we captured in previous loop
+            for (var k = 0; k < cells_to_update.length; k++)
+            {
+                cells[cells_to_update[k]].setAttribute('set-id', cells[j].getAttribute('set-id'));
+
+                if (this.debug)
+                    cells[cells_to_update[k]].innerHTML = cells[j].innerHTML;
+            } 
         }
     }
-    */
 
     this.generated = true;
 };
+
 // Create dat.GUI
 (function (){
 
