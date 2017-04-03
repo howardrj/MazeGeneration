@@ -1,10 +1,3 @@
-// Set info class definition
-function SetInfo (cellCount, firstNodePosition)
-{
-    this.cellCount = cellCount;
-    this.firstNodePosition = firstNodePosition;
-};
-
 // Maze class defintion
 function Maze (numCellsX, numCellsY, bias, cellWidth)
 {
@@ -113,7 +106,7 @@ Maze.prototype.generateMaze = function ()
                 cells[j].style.borderRightColor = "white";
 
                 // Merge sets (adjust set-id of old cells as well as next one)
-                // Ensures each row as correct set number configuration
+                // Ensures each row has correct set number configuration
                 var cells_to_update = new Array();
 
                 for (var k = 0; k < cells.length; k++)
@@ -152,25 +145,38 @@ Maze.prototype.generateMaze = function ()
             }
         }
 
-        var debug_mode = this.debug // Can't access 'this' pointer inside forEach for some reason
+        var debug_mode = this.debug; // Can't access 'this' pointer inside forEach for some reason
+        var bias_value = this.bias;
 
         // Loop through map info
         row_map.forEach(function (value, key, map) {
 
-            // Pick element from value, array create downward link and update below cell's set ID
-            var count = 0; 
-            while (count < value.length)
+            // Check against bias if we should add a downlink for each cell in value
+            // If none are added at the end, choose a random one    
+            var downward_links_created = 0;
+
+            for (var k = 0; k < value.length; k++)
             {
-                // Choose random cell index with set-id = key and create downward link
-                var cell_index = value[Math.floor(Math.random() * value.length)]
+                // Include bias in here
+                if (Math.random() > bias_value)
+                {
+                    cells[value[k]].style.borderBottomColor = "white";
+                    next_cells[value[k]].setAttribute('set-id', cells[value[k]].getAttribute('set-id'));
+
+                    if (debug_mode)
+                        next_cells[value[k]].innerHTML = cells[value[k]].innerHTML;
+                }
+            }
+
+            if (downward_links_created == 0)
+            {
+                var cell_index = value[Math.floor(Math.random() * value.length)]; 
 
                 cells[cell_index].style.borderBottomColor = "white";
                 next_cells[cell_index].setAttribute('set-id', cells[cell_index].getAttribute('set-id'));
 
                 if (debug_mode)
                     next_cells[cell_index].innerHTML = cells[cell_index].innerHTML;
-
-                count++;
             }
         });
     }
