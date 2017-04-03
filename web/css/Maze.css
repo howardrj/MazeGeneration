@@ -48,7 +48,8 @@ div.cell {
     border-right: 1px solid black;
     border-bottom: 1px solid black;
     box-sizing: border-box;
-    transition: border-bottom 0.5s;
-    transition: border-right  0.5s;
+    text-align: center;
+    transition: border 1s;
+    font-family: "Oswald";
+    font-color: black;
 }
-

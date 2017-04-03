@@ -60,6 +60,7 @@ int Maze::generate ()
     for (int i = 0; i < m_dimY - 2; i += 2)
     {
         // Map to store sets on each row
+        // Probably doesn't need to be map anymore since key is not important
         // (key, value) == (set_id, {num_cells, first_node_position})
         std::map <int, SetInfo*> row_sets;
 
@@ -107,13 +108,13 @@ int Maze::generate ()
         {
             int count = 0;
 
-            // Add up to num_cell downward links
+            // Add up to cellCount downward links
             // Need to add at least one per set
             while (count < it->second->cellCount)
             {
-                int b = (it->second->cellCount == 1) ? 0 : 2 * (rand() % (it->second->cellCount - 1));
+                int down_link_position  = (it->second->cellCount == 1) ? 0 : 2 * (rand() % (it->second->cellCount - 1));
 
-                m_maze[i + 1][it->second->firstNodePosition + b] = '|';
+                m_maze[i + 1][it->second->firstNodePosition + down_link_position] = '|';
 
                 count++;
             }    
