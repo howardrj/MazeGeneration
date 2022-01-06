@@ -1,3 +1,3 @@
-[submodule "src/javascript/dat.gui"]
-	path = src/javascript/dat.gui
+[submodule "static/javascript/dat.gui"]
+	path = static/javascript/dat.gui
 	url = https://github.com/dataarts/dat.gui

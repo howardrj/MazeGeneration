@@ -1,1 +1,3 @@
 Generating random mazes using Eller's algorithm.
+
+This repo is structured to make it easy to include as a django app.
