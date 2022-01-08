@@ -1,3 +1,6 @@
-Generating random mazes using Eller's algorithm.
+Generating random "perfect" mazes using Eller's algorithm.
+A perfect maze is one that has one single path between any two points in the maze.
+
+The web app can be viewed here: https://robbie-howard.com/maze_generation/ 
 
 This repo is structured to make it easy to include as a django app (as demonstrated here: https://www.hildeberto.com/2018/02/creating-django-app-git-submodule.html)
