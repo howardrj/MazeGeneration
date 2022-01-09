@@ -1,5 +1,5 @@
 Generating random "perfect" mazes using Eller's algorithm.
-A perfect maze is one that has one single path between any two points in the maze.
+A perfect maze is a maze where every point is reachable and where there is only one single path from one point in the maze to any other point.
 
 The web app can be viewed here: https://robbie-howard.com/maze_generation/ 
 
